@@ -1,0 +1,5 @@
+bpf/vmlinux.h
+vault/
+*.o
+/agent
+/testserver/testserver
