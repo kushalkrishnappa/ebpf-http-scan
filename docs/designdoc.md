@@ -1,7 +1,7 @@
 # ebpf-http-scan: design doc
 
 **Date:** 2026-09-25
-**Status:** Draft. M0 (environment) is implemented in `scripts/`; M1–M4 are planned.
+**Status:** Draft. M0 (environment) is implemented in `scripts/`; M1 (plain capture) in `bpf/`, `internal/capture` and `cmd/agent`; M2–M4 are planned.
 **Owner:** Kushal Krishnappa
 
 ---
@@ -59,7 +59,7 @@ curl ──► testserver (Go net/http, :8080 plain)   |  python/nginx HTTPS :84
 ```
 ebpf-http-scan/
   README.md                 # setup + demo commands
-  LEARNINGS.md              # journal: verifier errors, surprises, numbers
+  docs/LEARNINGS.md         # journal: verifier errors, surprises, numbers
   go.mod
   bpf/
     vmlinux.h               # generated from the running kernel, gitignored

@@ -1,5 +1,6 @@
 bpf/vmlinux.h
 vault/
 *.o
+internal/capture/capture_bpfe*.go
 /agent
 /testserver/testserver

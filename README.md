@@ -33,6 +33,15 @@ curl -H "User-Agent: ' OR 1=1 --" 'localhost:8080/search?q=x'
 
 It returns 200 with `{status, method, path, body_bytes}` for every request. It reads the whole body before replying, so every request byte goes through `tcp_recvmsg`. It logs only the method, path and body size, never header or query values.
 
+## Agent (M1: raw capture)
+
+```bash
+go generate ./...                   # bpf2go: compile bpf/capture.bpf.c, generate Go bindings
+sudo go run ./cmd/agent -port 8080  # print every tcp_recvmsg on :8080 as a quoted chunk
+```
+
+Each successful read on the port prints `conn=<socket cookie> pid comm len trunc` followed by the bytes, capped at 4096 per read (`trunc=true` beyond that). Stats (`events`, `drops`) go to stderr every 10 s and on Ctrl-C. At this stage the agent prints raw header values; redaction comes with M2. Only plain `read()` calls (ITER_UBUF) are captured, and HTTPS isn't.
+
 ## Running on macOS
 
 `scripts/setup-mac.sh` installs [Lima](https://lima-vm.io) with Homebrew and creates an Ubuntu 24.04 VM named `ebpf`. Your home directory is mounted writable, so the repo is at the same path inside the VM.
